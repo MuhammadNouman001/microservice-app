@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic_settings
+email_validator
+sqlalchemy
+asyncpg
+bcrypt
+pyjwt
+httpx
+google-auth
