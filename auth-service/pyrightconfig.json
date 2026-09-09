@@ -1,0 +1,11 @@
+{
+  "include": [
+    "."
+  ],
+  "venvPath": ".",
+  "venv": "venv",
+  "pythonPath": "./venv/bin/python",
+  "extraPaths": [
+    "./venv/lib/python3.8/site-packages"
+  ]
+}

@@ -1,0 +1,9 @@
+[tool.pyright]
+venvPath = "."
+venv = "venv"
+pythonPath = "./venv/bin/python"
+extraPaths = ["./venv/lib/python3.8/site-packages"]
+
+[tool.pyrefly]
+interpreter = "./venv/bin/python"
+site_packages = ["./venv/lib/python3.8/site-packages"]

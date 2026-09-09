@@ -9,3 +9,4 @@ bcrypt
 pyjwt
 httpx
 google-auth
+requests
