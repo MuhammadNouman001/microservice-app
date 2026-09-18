@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+    .card { max-width: 550px; margin: 0 auto; background: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .header { color: #2b3674; border-bottom: 2px solid #e9edf7; padding-bottom: 15px; }
+    .info-box { background: #f8fafc; border-left: 4px solid #6c757d; padding: 15px; margin: 20px 0; border-radius: 4px; }
+    .footer { text-align: center; color: #a310b5; font-size: 12px; margin-top: 25px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 class="header">👋 Log-off Notification</h2>
+    <p>Hello <strong><%= email %></strong>,</p>
+    <p>You have successfully logged out of your session.</p>
+    <div class="info-box">
+      <p><strong>Account:</strong> <%= email %></p>
+      <p><strong>Time:</strong> <%= timestamp %></p>
+    </div>
+    <div class="footer">
+      &copy; Microservices Request Platform | Automated System Notification
+    </div>
+  </div>
+</body>
+</html>
