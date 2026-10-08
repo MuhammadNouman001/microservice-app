@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic_settings
+email_validator
+pymongo[asyncio]
+httpx
+pyjwt
