@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=RequestResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=RequestResponse, response_model_by_alias=False, status_code=status.HTTP_201_CREATED)
 async def create_request(
     payload: RequestCreate,
     db: AsyncDatabase = Depends(get_database),
@@ -27,7 +27,7 @@ async def create_request(
     return await service.create_request(payload, requester_email)
 
 
-@router.get("/my-requests", response_model=list[RequestResponse])
+@router.get("/my-requests", response_model=list[RequestResponse], response_model_by_alias=False)
 async def get_my_requests(
     db: AsyncDatabase = Depends(get_database),
     current_user: dict = Depends(get_current_user)
@@ -40,7 +40,7 @@ async def get_my_requests(
     return await service.get_my_requests(requester_email)
 
 
-@router.get("/pending-approvals", response_model=list[RequestResponse])
+@router.get("/pending-approvals", response_model=list[RequestResponse], response_model_by_alias=False)
 async def get_pending_approvals(
     db: AsyncDatabase = Depends(get_database),
     current_user: dict = Depends(get_current_user)
@@ -53,7 +53,7 @@ async def get_pending_approvals(
     return await service.get_pending_approvals(superior_email)
 
 
-@router.patch("/{request_id}/status", response_model=RequestResponse)
+@router.patch("/{request_id}/status", response_model=RequestResponse, response_model_by_alias=False)
 async def update_request_status(
     request_id: str,
     payload: RequestStatusUpdate,

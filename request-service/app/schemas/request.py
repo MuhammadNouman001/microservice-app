@@ -56,7 +56,7 @@ class RequestStatusUpdate(BaseModel):
 
 # Response schema returned by API endpoints
 class RequestResponse(BaseModel):
-    id: PyObjectId = Field(alias="_id")
+    id: PyObjectId = Field(validation_alias="_id")
     title: str
     description: str
     type: RequestType

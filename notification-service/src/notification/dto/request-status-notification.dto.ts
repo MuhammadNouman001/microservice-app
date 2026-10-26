@@ -1,16 +1,22 @@
-import { IsEmail, IsIn, IsString } from 'class-validator';
+import { IsEmail, IsIn, IsOptional, IsString } from 'class-validator';
 
 export class RequestStatusNotificationDto {
+  @IsOptional()
+  @IsString()
+  requestId?: string;
+
   @IsString()
   title: string;
 
+  @IsOptional()
   @IsString()
-  description: string;
+  description?: string;
 
-  @IsIn(['Leave', 'Equipment', 'Overtime'])
-  type: string;
+  @IsOptional()
+  @IsString()
+  type?: string;
 
-  @IsIn(['APPROVED', 'REJECTED'])
+  @IsIn(['APPROVED', 'REJECTED', 'Approved', 'Rejected'])
   status: string;
 
   @IsEmail()
@@ -18,4 +24,8 @@ export class RequestStatusNotificationDto {
 
   @IsEmail()
   superiorEmail: string;
+
+  @IsOptional()
+  @IsString()
+  comment?: string;
 }

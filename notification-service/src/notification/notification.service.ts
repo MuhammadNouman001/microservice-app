@@ -54,55 +54,65 @@ export class NotificationService {
         }
     }
 
-    // 3. Send Request Created Email (Sent to BOTH Requester & Superior)
+    // 3. Send Request Created Email (Sent to each recipient individually)
     async sendRequestCreatedNotification(dto: RequestCreatedNotificationDto) {
-        try {
-            const recipients = [dto.requesterEmail, dto.superiorEmail];
-            await this.mailerService.sendMail({
-                to: recipients,
-                subject: `📋 New Request Created: ${dto.title}`,
-                template: 'request-created',
-                context: {
-                    title: dto.title,
-                    description: dto.description,
-                    type: dto.type,
-                    urgency: dto.urgency,
-                    requesterEmail: dto.requesterEmail,
-                    superiorEmail: dto.superiorEmail,
-                },
-            });
-            this.logger.log(`Request created emails sent to ${recipients.join(', ')}`);
-            return { success: true, message: 'Request created emails sent' };
-        } catch (error) {
-            const message = (error as any).message || String(error);
-            this.logger.error(`Failed to send request created emails:`, error);
-            return { success: false, error: message };
+        const recipients = Array.from(new Set([dto.requesterEmail, dto.superiorEmail]));
+        let sentCount = 0;
+
+        for (const recipient of recipients) {
+            try {
+                await this.mailerService.sendMail({
+                    to: recipient,
+                    subject: `📋 New Request Created: ${dto.title}`,
+                    template: 'request-created',
+                    context: {
+                        title: dto.title,
+                        description: dto.description,
+                        type: dto.type,
+                        urgency: dto.urgency,
+                        requesterEmail: dto.requesterEmail,
+                        superiorEmail: dto.superiorEmail,
+                    },
+                });
+                this.logger.log(`Request created email delivered to ${recipient}`);
+                sentCount++;
+            } catch (error) {
+                const message = (error as any).message || String(error);
+                this.logger.warn(`Could not deliver to ${recipient} (Resend restriction): ${message}`);
+            }
         }
+
+        return { success: sentCount > 0, delivered: sentCount };
     }
 
-    // 4. Send Request Status Update Email (Sent to BOTH Requester & Superior)
+    // 4. Send Request Status Update Email (Sent to each recipient individually)
     async sendRequestStatusNotification(dto: RequestStatusNotificationDto) {
-        try {
-            const recipients = [dto.requesterEmail, dto.superiorEmail];
-            await this.mailerService.sendMail({
-                to: recipients,
-                subject: `🔔 Request ${dto.status}: ${dto.title}`,
-                template: 'request-status',
-                context: {
-                    title: dto.title,
-                    description: dto.description,
-                    type: dto.type,
-                    status: dto.status,
-                    requesterEmail: dto.requesterEmail,
-                    superiorEmail: dto.superiorEmail,
-                },
-            });
-            this.logger.log(`Request status (${dto.status}) emails sent to ${recipients.join(', ')}`);
-            return { success: true, message: `Request status ${dto.status} emails sent` };
-        } catch (error) {
-            const message = (error as any).message || String(error);
-            this.logger.error(`Failed to send request status emails:`, error);
-            return { success: false, error: message };
+        const recipients = Array.from(new Set([dto.requesterEmail, dto.superiorEmail]));
+        let sentCount = 0;
+
+        for (const recipient of recipients) {
+            try {
+                await this.mailerService.sendMail({
+                    to: recipient,
+                    subject: `🔔 Request ${dto.status}: ${dto.title}`,
+                    template: 'request-status',
+                    context: {
+                        title: dto.title,
+                        description: dto.description || '',
+                        type: dto.type || 'Leave',
+                        status: dto.status,
+                        requesterEmail: dto.requesterEmail,
+                        superiorEmail: dto.superiorEmail,
+                    },
+                });
+                this.logger.log(`Request status (${dto.status}) email delivered to ${recipient}`);
+                sentCount++;
+            } catch (error) {
+                const message = (error as any).message || String(error);
+                this.logger.warn(`Could not deliver to ${recipient} (Resend restriction): ${message}`);
+            }
         }
+
+        return { success: sentCount > 0, delivered: sentCount };
     }
 }

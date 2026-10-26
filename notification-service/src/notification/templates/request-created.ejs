@@ -2,32 +2,33 @@
 <html>
 <head>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
-    .card { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 10px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    .header { color: #4318ff; border-bottom: 2px solid #e9edf7; padding-bottom: 15px; }
-    .badge-urgency { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
-    .High { background-color: #ffe5e5; color: #e53e3e; }
-    .Medium { background-color: #fffaf0; color: #dd6b20; }
-    .Low { background-color: #e6fffa; color: #319795; }
-    .ticket-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    .ticket-table td { padding: 10px; border-bottom: 1px solid #edf2f7; }
-    .footer { text-align: center; color: #a310b5; font-size: 12px; margin-top: 25px; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; margin: 0; padding: 20px; color: #f8fafc; }
+    .card { max-width: 600px; margin: 0 auto; background: #1e293b; border-radius: 12px; padding: 32px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    .header { color: #818cf8; border-bottom: 1px solid #334155; padding-bottom: 16px; margin-top: 0; }
+    .badge-urgency { display: inline-block; padding: 4px 12px; border-radius: 9999px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .High, .HIGH, .Urgent, .URGENT { background-color: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .Medium, .MEDIUM { background-color: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .Low, .LOW { background-color: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .ticket-table { width: 100%; border-collapse: collapse; margin: 24px 0; }
+    .ticket-table td { padding: 12px 10px; border-bottom: 1px solid #334155; color: #e2e8f0; font-size: 14px; }
+    .ticket-table td.label { font-weight: 600; color: #94a3b8; width: 30%; }
+    .footer { text-align: center; color: #64748b; font-size: 12px; margin-top: 24px; }
   </style>
 </head>
 <body>
   <div class="card">
     <h2 class="header">📋 New Request Created</h2>
-    <p>A new request requires attention:</p>
+    <p style="color: #cbd5e1; font-size: 14px; margin-bottom: 20px;">A new enterprise request has been submitted and requires review:</p>
     <table class="ticket-table">
-      <tr><td><strong>Title:</strong></td><td><%= title %></td></tr>
-      <tr><td><strong>Description:</strong></td><td><%= description %></td></tr>
-      <tr><td><strong>Type:</strong></td><td><%= type %></td></tr>
-      <tr><td><strong>Urgency:</strong></td><td><span class="badge-urgency <%= urgency %>"><%= urgency %></span></td></tr>
-      <tr><td><strong>Requester:</strong></td><td><%= requesterEmail %></td></tr>
-      <tr><td><strong>Superior:</strong></td><td><%= superiorEmail %></td></tr>
+      <tr><td class="label">Title</td><td><strong><%= title %></strong></td></tr>
+      <tr><td class="label">Description</td><td><%= description %></td></tr>
+      <tr><td class="label">Type</td><td><%= type %></td></tr>
+      <tr><td class="label">Urgency</td><td><span class="badge-urgency <%= urgency %>"><%= urgency %></span></td></tr>
+      <tr><td class="label">Requester</td><td><%= requesterEmail %></td></tr>
+      <tr><td class="label">Superior</td><td><%= superiorEmail %></td></tr>
     </table>
     <div class="footer">
-      &copy; Microservices Request Platform | Action Required
+      &copy; Microservices Request Platform &bull; Automated Action Notification
     </div>
   </div>
 </body>

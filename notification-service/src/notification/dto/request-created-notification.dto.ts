@@ -1,16 +1,20 @@
-import { IsEmail, IsIn, IsString } from 'class-validator';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class RequestCreatedNotificationDto {
+  @IsOptional()
+  @IsString()
+  requestId?: string;
+
   @IsString()
   title: string;
 
   @IsString()
   description: string;
 
-  @IsIn(['Leave', 'Equipment', 'Overtime'])
+  @IsString()
   type: string;
 
-  @IsIn(['Low', 'Medium', 'High'])
+  @IsString()
   urgency: string;
 
   @IsEmail()
