@@ -91,32 +91,3 @@ jobs:
             ${{ steps.login-ecr.outputs.registry }}/microservice-notification:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      # ============================================================
-      # 4. Frontend (Node.js 20 / Next.js Standalone)
-      # Build context: ./frontend
-      # Dockerfile copies: package.json, pnpm-lock.yaml,
-      # pnpm-workspace.yaml, .npmrc — all self-contained inside
-      # the frontend directory.
-      #
-      # NEXT_PUBLIC_* variables are baked into the static bundle at
-      # build time and must point to the actual production URLs of
-      # your deployed auth-service and request-service (e.g. your
-      # ALB DNS name or custom domain). Set these as GitHub secrets:
-      #   PROD_AUTH_SERVICE_URL   → https://api.yourdomain.com/auth
-      #   PROD_REQUEST_SERVICE_URL → https://api.yourdomain.com/requests
-      # ============================================================
-      - name: Build & Push Frontend Image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          file: ./frontend/Dockerfile
-          push: true
-          build-args: |
-            NEXT_PUBLIC_AUTH_SERVICE_URL=${{ secrets.PROD_AUTH_SERVICE_URL }}
-            NEXT_PUBLIC_REQUEST_SERVICE_URL=${{ secrets.PROD_REQUEST_SERVICE_URL }}
-          tags: |
-            ${{ steps.login-ecr.outputs.registry }}/microservice-frontend:${{ github.sha }}
-            ${{ steps.login-ecr.outputs.registry }}/microservice-frontend:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
