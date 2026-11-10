@@ -10,3 +10,4 @@ pyjwt
 httpx
 google-auth
 requests
+greenlet
